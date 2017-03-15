@@ -16,7 +16,7 @@ public class test {
         }
 
         double n = 7;
-        if (!(n>=5 && n<=8))
+        if (!(n>=5 && n<=8))//kappa
         {
             System.out.println("it is oke");
         }
