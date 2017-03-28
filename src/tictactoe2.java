@@ -9,11 +9,19 @@ import java.util.Scanner;
 
 public class tictactoe2 {
     static boolean is(String[][] arr, int row, int col, int l){
-        boolean tmp = false;
+        boolean tmp = false; // we try to check if this element of the table is the starting element of winning series in any direction
         for (int k = 1; k<l; k++)
         {
-            if(((col + (l - 1)) < arr[row].length)&&arr[row][col].equals(arr[row][col + k]))
+            if((((col + (l - 1)) < arr[row].length)&&(arr[row][col].equals(arr[row][col + k]))) ||
+                    (((row + (l - 1)) < arr.length) && (arr[row][col].equals(arr[row + k][col])))||
+                    (((((row + (l - 1)) < arr.length) && (col + (l - 1)) < arr[row].length))&&((arr[row][col].equals(arr[row + k][col + k]))))||
+                    (((((row - (l - 1)) >= 0) && (col + (l - 1)) < arr[row].length))&&((arr[row][col].equals(arr[row - k][col + k])))))
+            {
+                tmp = true; // if ANY of the conditions for being a winning series in any direction are being kept than we keep the tmp true
+            }
+            else return false;
         }
+        return tmp;
     }
     static String whowon(String[][] arr, int l) { //depends on array and length of same elements required to win
         for (int row = 0; row < arr.length; row++) {
@@ -22,7 +30,6 @@ public class tictactoe2 {
                     return(arr[row][col] + " won");
                 }
             }
-
         }
         return "match undetermined"; //if nothing happened before it means that we don't have a winner in the given text file
     }
