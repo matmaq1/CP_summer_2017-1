@@ -38,7 +38,7 @@ public class test {
 
         switch(s)
         {
-            case "A
+            case "A":
                 System.out.println("AA");
                 break; //without break lines it executes everything after first found case without checking
             case "B":
@@ -48,7 +48,7 @@ public class test {
                 System.out.println("sth else");
         }
 
-        int res = s.equals("B") ? 10 : 0 // if condition is true it is 10 else it is 0 //apache poi
+        int res = s.equals("B") ? 10 : 0; // if condition is true it is 10 else it is 0 //apache poi
     }
 
 }
