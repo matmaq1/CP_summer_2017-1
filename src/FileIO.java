@@ -11,7 +11,7 @@ public class FileIO {
         String home = System.getProperty("user.dir") + "\\src";
 
         File f = new File(home);
-
+//copied from stackexchange - didn't really know how to filter csv only, this could use an anonymous function
         File[] files = f.listFiles(new FilenameFilter() {
             public boolean accept(final File a_directory,
                                   final String a_name) {
