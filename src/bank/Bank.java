@@ -1,5 +1,7 @@
 package bank;
 
+import bank.expections.*;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,42 @@ public class Bank {
         return acc;
 
     }
+    public void transfer(Long accIdFrom, Long accIdTo, Double amount) throws BankExpection{
+        Account from = FindAccByID(accIdFrom);
+        Account to = FindAccByID(accIdTo);
+        try {
+            if(from!=null && to!=null){
+                if(from.getCurrency()==to.getCurrency()) {
+                    if(from.getBalance().compareTo(new BigDecimal(amount))==1) {
+                        from.charge(amount);
+                        to.deposit(amount);
+                    } else {
+                        throw new NotEoughMoneyExpection("not enough money on 'from' acc");
+                    }
+                } else {
+                    throw new WrongCurrency("currencies don't match");
+                }
+            } else {
+                throw new NullPointerException();
+            }
 
+        } catch (BankExpection | NullPointerException e) {
+            System.out.println("something went wrong " + e);
+
+        }
+
+    }
+
+    private Account FindAccByID(Long accID){
+
+        for(Account account : accountList){
+           if(account.getAccountId()==accID){
+               return account;
+           }
+        }
+        return null;
+
+    }
 
 
     @Override

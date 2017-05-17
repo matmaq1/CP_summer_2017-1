@@ -1,5 +1,8 @@
 package bank;
 
+import bank.expections.NegativeAmountExpection;
+import bank.expections.NotEoughMoneyExpection;
+
 import java.math.BigDecimal;
 
 /**
@@ -16,11 +19,38 @@ public abstract class Account {
         this.customer = customer;
         this.balance = new BigDecimal(0);
     }
-    public BigDecimal deposit(BigDecimal cash){
-        this.setBalance(this.getBalance().add(cash));
-        return this.getBalance();
-    }
 
+    public void deposit(BigDecimal cash) throws NegativeAmountExpection{
+        if (cash.compareTo(new BigDecimal(0))>0){
+            this.setBalance(this.getBalance().add(cash));
+            return;
+        }
+        else{ // need to handle exceptions
+            throw new NegativeAmountExpection("Tried to deposit a negative amount of money " + cash);
+        }
+
+
+    }
+    public void charge (BigDecimal amount ) throws NotEoughMoneyExpection, NegativeAmountExpection{
+        if (this.getBalance().compareTo(amount) == 1){ //can use this. get or not
+            setBalance(getBalance().subtract(amount));
+        }
+        else{
+            if(amount.compareTo(new BigDecimal(0))<=0){
+                throw new NegativeAmountExpection("negative");
+            }
+             else{
+            throw new NotEoughMoneyExpection("insufficient funds");}
+
+        }
+
+    }
+    public void charge(double amount) throws NotEoughMoneyExpection, NegativeAmountExpection{
+        charge(new BigDecimal(amount)); //conversion
+    }
+    public void deposit(double amount) throws NegativeAmountExpection{
+        deposit(new BigDecimal(amount));
+    }
 
     public String getCurrency() {
         return currency;
